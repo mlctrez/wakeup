@@ -25,11 +25,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	api := &HostsApi{}
-	err = json.NewDecoder(resp.Body).Decode(api)
+	api := struct {
+		Hosts []struct {
+			Name       string `json:"_id"`
+			IpAddress  string `json:"ip_address"`
+			MacAddress string `json:"mac_address"`
+		} `json:"hosts"`
+	}{}
+
+	err = json.NewDecoder(resp.Body).Decode(&api)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	for _, h := range api.Hosts {
 		for _, a := range args {
 			if strings.ToLower(h.Name) == strings.ToLower(a) {
@@ -44,16 +52,6 @@ func main() {
 				}
 			}
 		}
-
 	}
 
-}
-
-type HostsApi struct {
-	Hosts []*Host
-}
-type Host struct {
-	Name       string `json:"_id"`
-	IpAddress  string `json:"ip_address"`
-	MacAddress string `json:"mac_address"`
 }
