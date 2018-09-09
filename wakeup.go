@@ -13,6 +13,8 @@ import (
 )
 
 func main() {
+	var hostsUrl string
+	flag.StringVar(&hostsUrl, "hostsUrl", "https://optiplex/hosts", "the url to retrieve a list of hosts from")
 	flag.Parse()
 	args := flag.Args()
 
@@ -21,15 +23,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	resp, err := http.Get("http://pe0:10001/hosts")
+	resp, err := http.Get(hostsUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 	api := struct {
 		Hosts []struct {
-			Name       string `json:"_id"`
-			IpAddress  string `json:"ip_address"`
-			MacAddress string `json:"mac_address"`
+			Name       string `json:"Id"`
+			IpAddress  string `json:"Ip"`
+			MacAddress string `json:"Mac"`
 		} `json:"hosts"`
 	}{}
 
