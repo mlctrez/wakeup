@@ -14,7 +14,7 @@ import (
 
 func main() {
 	var hostsUrl string
-	flag.StringVar(&hostsUrl, "hostsUrl", "https://optiplex/hosts", "the url to retrieve a list of hosts from")
+	flag.StringVar(&hostsUrl, "hostsUrl", "http://optiplex:8053/hosts", "the url to retrieve a list of hosts from")
 	flag.Parse()
 	args := flag.Args()
 
